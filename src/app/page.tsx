@@ -1,156 +1,54 @@
-"use client";
+import Link from "next/link";
 
-import { useState, useEffect, useRef } from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import type { Splide as SplideType } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
-
-const dummyImages = [
-  "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-  "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-  "https://images.unsplash.com/photo-1491553895911-0055eca6402d"
-];
-
-export default function ResponsiveGallery() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const splideRef = useRef<SplideType | null>(null);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Mobile view
-  if (isMobile) {
-    return (
-      <div className="w-full bg-[#043232] py-10 text-white flex flex-col items-center">
-        <Splide
-          ref={splideRef}
-          options={{
-            type: "loop",
-            perPage: 1,
-            pagination: false,
-            arrows: false,
-            gap: "1rem",
-          }}
-          onMoved={(_, newIndex: number) => {
-            setCurrentIndex(newIndex % dummyImages.length);
-          }}
-        >
-          {dummyImages.map((img, i) => (
-            <SplideSlide key={i}>
-              <img
-                src={img}
-                alt={`slide-${i}`}
-                className="w-full h-64 object-cover rounded-xl shadow-lg max-w-[300px] mx-auto"
-              />
-            </SplideSlide>
-          ))}
-        </Splide>
-
-        {/* Controls */}
-        <div className="flex items-center justify-center gap-8 mt-6">
-          <button
-            onClick={() => splideRef.current?.go("<")}
-            className="flex items-center gap-2 uppercase tracking-wider transition-colors duration-200 hover:text-gray-400 cursor-pointer"
-          >
-           <ChevronLeftIcon />
-          </button>
-
-          {/* Progress Bar */}
-          <div className="relative mx-auto bg-gray-600 w-[200px]" style={{ height: "1px" }}>
-            <div
-              className="absolute bg-[#b3dcd4] transition-all duration-300 ease-in-out"
-              style={{
-                height: "8px",
-                width: `${100 / dummyImages.length}%`,
-                left: `${(currentIndex / dummyImages.length) * 100}%`,
-                top: "-2px",
-              }}
-            ></div>
-          </div>
-
-          <button
-            onClick={() => splideRef.current?.go(">")}
-            className="flex items-center gap-2 uppercase tracking-wider transition-colors duration-200 hover:text-gray-400 cursor-pointer"
-          >
-          <ChevronRightIcon />
-          </button>
-        </div>
-
-        {/* Slide Counter */}
-        <div className="mt-2 text-sm">{currentIndex + 1} / {dummyImages.length}</div>
-      </div>
-    );
-  }
-
-  // Desktop view
+export default function Home() {
   return (
-    <div className="w-full bg-[#043232] py-10 text-white flex flex-col items-center">
-        <Splide
-          ref={splideRef}
-          options={{
-            type: "loop",
-            perPage: 1,
-            pagination: false,
-            arrows: false,
-            gap: "1rem",
-          }}
-          onMoved={(_, newIndex: number) => {
-            setCurrentIndex(newIndex % dummyImages.length);
-          }}
-        >
-          {dummyImages.map((img, i) => (
-            <SplideSlide key={i}>
-              <img
-                src={img}
-                alt={`slide-${i}`}
-                className="w-full h-[300px] object-cover rounded-xl shadow-lg max-w-[600px] mx-auto"
-              />
-            </SplideSlide>
-          ))}
-        </Splide>
-
-        {/* Controls */}
-        <div className="flex items-center justify-center gap-8 mt-6">
-          <button
-            onClick={() => splideRef.current?.go("<")}
-            className="flex items-center gap-2 uppercase tracking-wider transition-colors duration-200 hover:text-gray-400 cursor-pointer"
-          >
-            <ChevronLeftIcon /> Next
-          </button>
-
-          {/* Progress Bar */}
-          <div className="relative mx-auto bg-gray-600 w-[200px]" style={{ height: "1px" }}>
-            <div
-              className="absolute bg-[#b3dcd4] transition-all duration-300 ease-in-out"
-              style={{
-                height: "8px",
-                width: `${100 / dummyImages.length}%`,
-                left: `${(currentIndex / dummyImages.length) * 100}%`,
-                top: "-2px",
-              }}
-            ></div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-indigo-900 text-white">
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="text-center mb-16">
+          <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+            Welcome to Community
+          </h1>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+            Discover powerful tools, innovative solutions, and a passionate community 
+            dedicated to building the next generation of digital experiences.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Link
+              href="/carousel"
+              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 rounded-full font-semibold text-lg transition-all shadow-lg"
+            >
+              View Gallery
+            </Link>
+            <Link
+              href="/about"
+              className="px-8 py-4 border-2 border-purple-400 hover:bg-purple-400 hover:text-gray-900 rounded-full font-semibold text-lg transition-all"
+            >
+              Learn More
+            </Link>
           </div>
-
-          <button
-            onClick={() => splideRef.current?.go(">")}
-            className="flex items-center gap-2 uppercase tracking-wider transition-colors duration-200 hover:text-gray-400 cursor-pointer"
-          >
-            Previous <ChevronRightIcon />
-          </button>
         </div>
 
-        {/* Slide Counter */}
-        <div className="mt-2 text-sm">{currentIndex + 1} / {dummyImages.length}</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-purple-500/30 hover:border-purple-500 transition-all">
+            <h2 className="text-2xl font-bold mb-4 text-purple-400">Innovation</h2>
+            <p className="text-gray-300">
+              Cutting-edge solutions that push the boundaries of what's possible in digital technology.
+            </p>
+          </div>
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-indigo-500/30 hover:border-indigo-500 transition-all">
+            <h2 className="text-2xl font-bold mb-4 text-indigo-400">Community</h2>
+            <p className="text-gray-300">
+              A vibrant community of developers, designers, and innovators working together.
+            </p>
+          </div>
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-8 border border-pink-500/30 hover:border-pink-500 transition-all">
+            <h2 className="text-2xl font-bold mb-4 text-pink-400">Excellence</h2>
+            <p className="text-gray-300">
+              Commitment to delivering the highest quality products and services.
+            </p>
+          </div>
+        </div>
       </div>
+    </div>
   );
 }

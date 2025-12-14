@@ -1,8 +1,8 @@
-import "./globals.css";
 import type { Metadata } from "next";
 // Update the import path if Header is located elsewhere, for example:
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import "./globals.css";
 export const metadata: Metadata = {
   title: "My Website",  
   description: "A Next.js app with reusable components",
